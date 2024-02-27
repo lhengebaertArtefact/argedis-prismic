@@ -32,14 +32,18 @@ export default async function LangChoice({
   const languePage = await client.getAllByType("langue_page", {
     lang: myLocale,
   });
+  const languePageobj = languePage.find((element: any) => {
+    return element.id;
+  });
+  console.log(languePageobj);
 
   return (
     <div>
-      <div> {languePage[0].data.select_text}</div>
+      <div> {languePageobj?.data.select_text}</div>
       <Link href={`/${region}/fr/`}>FR</Link>
       <Link href={`/${region}/en/`}>EN</Link>
       <Link href={`/${region}/${locale}/${region}`}>
-        {languePage[0].data.button_text}
+        {languePageobj?.data.button_text}
       </Link>
     </div>
   );
