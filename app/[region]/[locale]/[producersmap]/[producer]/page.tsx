@@ -50,6 +50,7 @@ export default async function ProducersPage({
     <main className="">
       <PrismicNextImage field={myProducer.data.producer_photo} />
       <div>{myProducer.data.producer_name}</div>
+      <div>{myProducer.data.producer_description}</div>
     </main>
   );
 }

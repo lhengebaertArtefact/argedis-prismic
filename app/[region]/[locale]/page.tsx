@@ -14,7 +14,6 @@ export async function generateStaticParams() {
       { region: id, locale: "en" }
     );
   }
-
   return staticParams;
 }
 
@@ -26,12 +25,22 @@ export default async function LangChoice({
   const { region } = params;
   const { locale } = params;
 
+  const myLocale = locale === "fr" ? "fr-fr" : "en-us";
+
+  const client = createClient();
+
+  const languePage = await client.getAllByType("langue_page", {
+    lang: myLocale,
+  });
+
   return (
     <div>
-      <div> Choisissez votre langue</div>
+      <div> {languePage[0].data.select_text}</div>
       <Link href={`/${region}/fr/`}>FR</Link>
       <Link href={`/${region}/en/`}>EN</Link>
-      <Link href={`/${region}/${locale}/${region}`}>Suivant</Link>
+      <Link href={`/${region}/${locale}/${region}`}>
+        {languePage[0].data.button_text}
+      </Link>
     </div>
   );
 }

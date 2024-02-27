@@ -4,6 +4,93 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+type LanguePageDocumentDataSlicesSlice = never;
+
+/**
+ * Content for langue page documents
+ */
+interface LanguePageDocumentData {
+  /**
+   * select text field in *langue page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: langue_page.select_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  select_text: prismic.KeyTextField;
+
+  /**
+   * button text field in *langue page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: langue_page.button_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  button_text: prismic.KeyTextField;
+
+  /**
+   * Slice Zone field in *langue page*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: langue_page.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<LanguePageDocumentDataSlicesSlice> /**
+   * Meta Description field in *langue page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: langue_page.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *langue page*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: langue_page.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+
+  /**
+   * Meta Title field in *langue page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: langue_page.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_title: prismic.KeyTextField;
+}
+
+/**
+ * langue page document from Prismic
+ *
+ * - **API ID**: `langue_page`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type LanguePageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<LanguePageDocumentData>,
+    "langue_page",
+    Lang
+  >;
+
 type ProducerDocumentDataSlicesSlice = never;
 
 /**
@@ -326,6 +413,7 @@ export type SettingsDocument<Lang extends string = string> =
   >;
 
 export type AllDocumentTypes =
+  | LanguePageDocument
   | ProducerDocument
   | RegionDocument
   | SettingsDocument;
@@ -340,6 +428,9 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      LanguePageDocument,
+      LanguePageDocumentData,
+      LanguePageDocumentDataSlicesSlice,
       ProducerDocument,
       ProducerDocumentData,
       ProducerDocumentDataSlicesSlice,
