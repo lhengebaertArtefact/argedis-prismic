@@ -7,11 +7,11 @@ export async function generateStaticParams() {
   const regions = await client.getAllByType("region");
 
   for (const region of regions) {
-    const { id } = region;
+    const { uid } = region;
 
     staticParams.push(
-      { region: id, locale: "fr" },
-      { region: id, locale: "en" }
+      { region: uid, locale: "fr" },
+      { region: uid, locale: "en" }
     );
   }
   return staticParams;
