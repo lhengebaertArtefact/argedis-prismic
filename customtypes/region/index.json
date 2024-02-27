@@ -1,0 +1,90 @@
+{
+  "format": "page",
+  "id": "region",
+  "label": "Region",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "region_name": {
+        "type": "Text",
+        "config": {
+          "label": "Region name",
+          "placeholder": ""
+        }
+      },
+      "region_photo": {
+        "type": "Image",
+        "config": {
+          "label": "Region photo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "producers": {
+        "type": "Group",
+        "config": {
+          "label": "Producers",
+          "repeat": true,
+          "fields": {
+            "producer": {
+              "type": "Link",
+              "config": {
+                "label": "Producer",
+                "select": "document",
+                "customtypes": ["producer"]
+              }
+            }
+          }
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {}
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_description": {
+        "config": {
+          "label": "Meta Description",
+          "placeholder": "A brief summary of the page"
+        },
+        "type": "Text"
+      },
+      "meta_image": {
+        "config": {
+          "constraint": {
+            "height": 1260,
+            "width": 2400
+          },
+          "label": "Meta Image",
+          "thumbnails": []
+        },
+        "type": "Image"
+      },
+      "meta_title": {
+        "config": {
+          "label": "Meta Title",
+          "placeholder": "A title of the page used for social media and search engines"
+        },
+        "type": "Text"
+      },
+      "slices1": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {}
+        }
+      }
+    }
+  }
+}
