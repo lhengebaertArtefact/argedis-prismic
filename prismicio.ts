@@ -23,6 +23,14 @@ const routes: prismic.ClientConfig["routes"] = [
     type: 'settings',
     path: '/',
   },
+  {
+    type: 'producer',
+    path: '/:uid',
+  },
+  {
+    type: 'langue_page',
+    path: '/:uid',
+  },
 
 ];
 
