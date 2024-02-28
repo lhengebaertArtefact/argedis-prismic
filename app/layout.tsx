@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { createClient } from "@/prismicio";
 import Script from "next/script";
+import { PrismicPreview } from "@prismicio/next";
+import { repositoryName } from "@/prismicio";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +37,12 @@ export default function RootLayout({
         <Script src="/script.js" />
         <Script src="/script2.js" />
         {children}
+        <PrismicPreview repositoryName={repositoryName} />
+        <script
+          async
+          defer
+          src="https://static.cdn.prismic.io/prismic.js?new=true&repo=first-prismic-app-artefact"
+        ></script>
       </body>
     </html>
   );

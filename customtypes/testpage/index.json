@@ -1,0 +1,54 @@
+{
+  "format": "custom",
+  "id": "testpage",
+  "label": "testPage",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "map": {
+        "type": "Image",
+        "config": {
+          "label": "map",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "testtext": {
+        "type": "Text",
+        "config": {
+          "label": "testText",
+          "placeholder": ""
+        }
+      },
+      "datetest": {
+        "type": "Date",
+        "config": {
+          "label": "dateTest",
+          "placeholder": ""
+        }
+      },
+      "geopointtest": {
+        "type": "GeoPoint",
+        "config": {
+          "label": "geoPointTest"
+        }
+      },
+      "testrichtext": {
+        "type": "StructuredText",
+        "config": {
+          "label": "testRichText",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      }
+    }
+  }
+}

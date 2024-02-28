@@ -412,11 +412,88 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Content for testPage documents
+ */
+interface TestpageDocumentData {
+  /**
+   * map field in *testPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: testpage.map
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  map: prismic.ImageField<never>;
+
+  /**
+   * testText field in *testPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: testpage.testtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  testtext: prismic.KeyTextField;
+
+  /**
+   * dateTest field in *testPage*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: testpage.datetest
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#date
+   */
+  datetest: prismic.DateField;
+
+  /**
+   * geoPointTest field in *testPage*
+   *
+   * - **Field Type**: GeoPoint
+   * - **Placeholder**: *None*
+   * - **API ID Path**: testpage.geopointtest
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#geopoint
+   */
+  geopointtest: prismic.GeoPointField;
+
+  /**
+   * testRichText field in *testPage*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: testpage.testrichtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  testrichtext: prismic.RichTextField;
+}
+
+/**
+ * testPage document from Prismic
+ *
+ * - **API ID**: `testpage`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TestpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<TestpageDocumentData>,
+    "testpage",
+    Lang
+  >;
+
 export type AllDocumentTypes =
   | LanguePageDocument
   | ProducerDocument
   | RegionDocument
-  | SettingsDocument;
+  | SettingsDocument
+  | TestpageDocument;
 
 declare module "@prismicio/client" {
   interface CreateClient {
@@ -443,6 +520,8 @@ declare module "@prismicio/client" {
       SettingsDocumentData,
       SettingsDocumentDataNavigationItem,
       SettingsDocumentDataSlicesSlice,
+      TestpageDocument,
+      TestpageDocumentData,
       AllDocumentTypes,
     };
   }

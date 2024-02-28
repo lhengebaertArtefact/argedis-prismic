@@ -6,6 +6,8 @@ export async function generateStaticParams() {
   const client = createClient();
   const regions = await client.getAllByType("region");
 
+  console.log(regions);
+
   for (const region of regions) {
     const { uid } = region;
 
@@ -35,7 +37,6 @@ export default async function LangChoice({
   const languePageobj = languePage.find((element: any) => {
     return element.id;
   });
-  console.log(languePageobj);
 
   return (
     <div>
