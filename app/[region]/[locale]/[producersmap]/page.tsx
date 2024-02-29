@@ -46,48 +46,31 @@ export default async function Producersmap({
   }
   const myProd: any = myRegion.data.producers;
 
-  // Vérifier si le document est publié ou non
-  const isPublished = !myRegion.tags.includes("unpublished");
+  // Fonction pour générer une position aléatoire dans une plage spécifique
+  const getPosition = (min: any, max: any) => {
+    return Math.floor(Math.random() * (max - min + 1) + min) + "px";
+  };
 
-  // Afficher la page uniquement en mode développement ou si le document est publié
-  if (
-    process.env.NODE_ENV !== "production" ||
-    (process.env.NODE_ENV === "production" && isPublished)
-  ) {
-    // Fonction pour générer une position aléatoire dans une plage spécifique
-    const getPosition = (min: any, max: any) => {
-      return Math.floor(Math.random() * (max - min + 1) + min) + "px";
-    };
-
-    return (
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        <PrismicNextImage field={myRegion.data.region_photo} />
-        {myProd.map((element: any) => (
-          <Link
-            key={element.producer.id}
-            href={`/${region}/${locale}/${region}/${element.producer.uid}`}
-            style={{
-              position: "absolute",
-              top: getPosition(0, 500), // positions verticales
-              left: getPosition(0, 700), // positions horizontales
-              backgroundColor: "red",
-              padding: "20px",
-              borderRadius: "50%",
-              opacity: 0.5,
-            }}
-          >
-            {element.producer.uid}
-          </Link>
-        ))}
-      </div>
-    );
-  } else {
-    // En mode de production et le document n'est pas publié, renvoyer une erreur 404
-    return (
-      <div>
-        <h1>Page not found</h1>
-        <p>404</p>
-      </div>
-    );
-  }
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <PrismicNextImage field={myRegion.data.region_photo} />
+      {myProd.map((element: any) => (
+        <Link
+          key={element.producer.id}
+          href={`/${region}/${locale}/${region}/${element.producer.uid}`}
+          style={{
+            position: "absolute",
+            top: getPosition(0, 500), // positions verticales
+            left: getPosition(0, 700), // positions horizontales
+            backgroundColor: "red",
+            padding: "20px",
+            borderRadius: "50%",
+            opacity: 0.5,
+          }}
+        >
+          {element.producer.uid}
+        </Link>
+      ))}
+    </div>
+  );
 }

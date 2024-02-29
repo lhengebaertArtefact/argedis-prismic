@@ -55,28 +55,11 @@ export default async function ProducersPage({
     );
   }
 
-  // Vérifier si le document est publié ou non
-  const isPublished = !myProducer.tags.includes("unpublished");
-
-  // Afficher la page uniquement en mode développement ou si le document est publié
-  if (
-    process.env.NODE_ENV !== "production" ||
-    (process.env.NODE_ENV === "production" && isPublished)
-  ) {
-    return (
-      <main className="">
-        <PrismicNextImage field={myProducer.data.producer_photo} />
-        <div>{myProducer.data.producer_name}</div>
-        <div>{myProducer.data.producer_description}</div>
-      </main>
-    );
-  } else {
-    // En mode de production et le document n'est pas publié, renvoyer une erreur 404
-    return (
-      <div>
-        <h1>Page not found</h1>
-        <p>404</p>
-      </div>
-    );
-  }
+  return (
+    <main className="">
+      <PrismicNextImage field={myProducer.data.producer_photo} />
+      <div>{myProducer.data.producer_name}</div>
+      <div>{myProducer.data.producer_description}</div>
+    </main>
+  );
 }
