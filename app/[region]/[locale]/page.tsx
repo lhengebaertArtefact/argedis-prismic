@@ -6,8 +6,6 @@ export async function generateStaticParams() {
   const client = createClient();
   const regions = await client.getAllByType("region");
 
-  console.log(regions);
-
   for (const region of regions) {
     const { uid } = region;
 
