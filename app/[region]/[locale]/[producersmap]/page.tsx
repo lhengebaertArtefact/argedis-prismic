@@ -40,16 +40,6 @@ export default async function Producersmap({
   // Vérifier si le document est publié ou non
   const isPublished = !myRegion.tags.includes("unpublished");
 
-  // En mode de production, renvoyer une erreur 404 pour les documents non publiés
-  if (process.env.NODE_ENV === "production" && !isPublished) {
-    return (
-      <div>
-        <h1>Page not found</h1>
-        <p>404</p>
-      </div>
-    );
-  }
-
   // Afficher la page uniquement en mode développement ou si le document est publié
   if (process.env.NODE_ENV !== "production" || isPublished) {
     // Fonction pour générer une position aléatoire dans une plage spécifique
@@ -79,7 +69,13 @@ export default async function Producersmap({
         ))}
       </div>
     );
+  } else {
+    // En mode de production et le document n'est pas publié, renvoyer une erreur 404
+    return (
+      <div>
+        <h1>Page not found</h1>
+        <p>404</p>
+      </div>
+    );
   }
-
-  return null;
 }

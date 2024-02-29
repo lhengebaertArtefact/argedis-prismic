@@ -12,8 +12,17 @@ export default async function Region({
   // Vérifier si le document est publié ou non
   const isPublished = !myRegion.tags.includes("unpublished");
 
-  // En mode de production, renvoyer une erreur 404 pour les documents non publiés
-  if (process.env.NODE_ENV === "production" && !isPublished) {
+  // Afficher la page uniquement en mode développement ou si le document est publié
+  if (process.env.NODE_ENV !== "production" || isPublished) {
+    return (
+      <div>
+        <div>{myRegion.data.region_name}</div>
+        <div>{myRegion.data.meta_description}</div>
+        <img src={myRegion.data.region_photo?.url || ""} />
+      </div>
+    );
+  } else {
+    // En mode de production et le document n'est pas publié, renvoyer une erreur 404
     return (
       <div>
         <h1>Page not found</h1>
@@ -21,14 +30,4 @@ export default async function Region({
       </div>
     );
   }
-
-  // Afficher la page uniquement en mode développement ou si le document est publié
-
-  return (
-    <div>
-      <div>{myRegion.data.region_name}</div>
-      <div>{myRegion.data.meta_description}</div>
-      <img src={myRegion.data.region_photo?.url || ""} />
-    </div>
-  );
 }
