@@ -46,6 +46,15 @@ export default async function ProducersPage({
     lang: myLocale,
   });
 
+  if (!myProducer) {
+    return (
+      <div>
+        <h1>Page not found</h1>
+        <p>404</p>
+      </div>
+    );
+  }
+
   // Vérifier si le document est publié ou non
   const isPublished = !myProducer.tags.includes("unpublished");
 

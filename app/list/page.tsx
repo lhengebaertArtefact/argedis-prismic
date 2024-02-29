@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <main className="">
-      {region.results.map((element: any) => {
+      {region.results.map((element: any, index: any) => {
         // Vérifier si le document est publié ou non
         const isPublished = !element.tags.includes("unpublished");
 
@@ -23,7 +23,7 @@ export default async function Home() {
           );
         } else {
           // Ne rien afficher pour les documents non publiés en mode production
-          return null;
+          return <div key={index}></div>;
         }
       })}
     </main>
