@@ -46,11 +46,29 @@ export default async function ProducersPage({
     lang: myLocale,
   });
 
-  return (
-    <main className="">
-      <PrismicNextImage field={myProducer.data.producer_photo} />
-      <div>{myProducer.data.producer_name}</div>
-      <div>{myProducer.data.producer_description}</div>
-    </main>
-  );
+  // Vérifier si le document est publié ou non
+  const isPublished = !myProducer.tags.includes("unpublished");
+
+  // En mode de production, renvoyer une erreur 404 pour les documents non publiés
+  if (process.env.NODE_ENV === "production" && !isPublished) {
+    return (
+      <div>
+        <h1>Page not found</h1>
+        <p>404</p>
+      </div>
+    );
+  }
+
+  // Afficher la page uniquement en mode développement ou si le document est publié
+  if (process.env.NODE_ENV !== "production" || isPublished) {
+    return (
+      <main className="">
+        <PrismicNextImage field={myProducer.data.producer_photo} />
+        <div>{myProducer.data.producer_name}</div>
+        <div>{myProducer.data.producer_description}</div>
+      </main>
+    );
+  }
+
+  return null;
 }

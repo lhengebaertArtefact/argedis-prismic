@@ -29,40 +29,57 @@ export default async function Producersmap({
 }: {
   params: { region: any; locale: string; producersmap: string };
 }) {
-  const { locale } = params;
-  const { region } = params;
+  const { locale, region } = params;
 
   const myLocale = locale === "fr" ? "fr-fr" : "en-us";
 
   const client = createClient();
   const myRegion = await client.getByUID("region", region, { lang: myLocale });
-
   const myProd: any = myRegion.data.producers;
 
-  // Fonction pour générer une position aléatoire dans une plage spécifique
-  const getPosition = (min: any, max: any) => {
-    return Math.floor(Math.random() * (max - min + 1) + min) + "px";
-  };
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
-      <PrismicNextImage field={myRegion.data.region_photo} />
-      {myProd.map((element: any) => (
-        <Link
-          key={element.producer.id}
-          href={`/${region}/${locale}/${region}/${element.producer.uid}`}
-          style={{
-            position: "absolute",
-            top: getPosition(0, 500), // positions verticales
-            left: getPosition(0, 700), // positions horizontales
-            backgroundColor: "red",
-            padding: "20px",
-            borderRadius: "50%",
-            opacity: 0.5,
-          }}
-        >
-          {element.producer.uid}
-        </Link>
-      ))}
-    </div>
-  );
+  // Vérifier si le document est publié ou non
+  const isPublished = !myRegion.tags.includes("unpublished");
+
+  // En mode de production, renvoyer une erreur 404 pour les documents non publiés
+  if (process.env.NODE_ENV === "production" && !isPublished) {
+    return (
+      <div>
+        <h1>Page not found</h1>
+        <p>404</p>
+      </div>
+    );
+  }
+
+  // Afficher la page uniquement en mode développement ou si le document est publié
+  if (process.env.NODE_ENV !== "production" || isPublished) {
+    // Fonction pour générer une position aléatoire dans une plage spécifique
+    const getPosition = (min: any, max: any) => {
+      return Math.floor(Math.random() * (max - min + 1) + min) + "px";
+    };
+
+    return (
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <PrismicNextImage field={myRegion.data.region_photo} />
+        {myProd.map((element: any) => (
+          <Link
+            key={element.producer.id}
+            href={`/${region}/${locale}/${region}/${element.producer.uid}`}
+            style={{
+              position: "absolute",
+              top: getPosition(0, 500), // positions verticales
+              left: getPosition(0, 700), // positions horizontales
+              backgroundColor: "red",
+              padding: "20px",
+              borderRadius: "50%",
+              opacity: 0.5,
+            }}
+          >
+            {element.producer.uid}
+          </Link>
+        ))}
+      </div>
+    );
+  }
+
+  return null;
 }

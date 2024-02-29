@@ -1,5 +1,3 @@
-// pages/[region]/page.tsx
-
 import { createClient } from "@/prismicio";
 
 export default async function Region({
@@ -7,9 +5,15 @@ export default async function Region({
 }: {
   params: { region: string; locale: string };
 }) {
-  const ENVIRONMENT = process.env.NODE_ENV || "development";
-  if (ENVIRONMENT === "production") {
-    // En mode de production, ne rend pas la page mais renvoie une erreur 404
+  const client = createClient();
+  const { region, locale } = params;
+  const myRegion = await client.getByUID("region", region);
+
+  // Vérifier si le document est publié ou non
+  const isPublished = !myRegion.tags.includes("unpublished");
+
+  // En mode de production, renvoyer une erreur 404 pour les documents non publiés
+  if (process.env.NODE_ENV === "production" && !isPublished) {
     return (
       <div>
         <h1>Page not found</h1>
@@ -18,22 +22,16 @@ export default async function Region({
     );
   }
 
-  // En mode de développement, récupère les données et rend la page normalement
-  const client = createClient();
-  const { region, locale } = params;
-
-  try {
-    const regions = await client.getByUID("region", region);
-
+  // Afficher la page uniquement en mode développement ou si le document est publié
+  if (process.env.NODE_ENV !== "production" || isPublished) {
     return (
       <div>
-        <div>{regions.data.region_name}</div>
-        <div>{regions.data.meta_description}</div>
-        <img src={regions.data.region_photo?.url || ""} />
+        <div>{myRegion.data.region_name}</div>
+        <div>{myRegion.data.meta_description}</div>
+        <img src={myRegion.data.region_photo?.url || ""} />
       </div>
     );
-  } catch (error) {
-    console.error("Error fetching region:", error);
-    return <div>Error fetching region data.</div>;
   }
+
+  return null;
 }
