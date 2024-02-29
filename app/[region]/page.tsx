@@ -9,7 +9,7 @@ export default async function Region({
   const { region, locale } = params;
   const myRegion = await client.getByUID("region", region);
 
-  // Vérifier si le document est publié
+  // Vérifier si le document est publié ou non
   const isPublished = !myRegion.tags.includes("unpublished");
 
   // En mode de production, renvoyer une erreur 404 pour les documents non publiés
@@ -23,6 +23,7 @@ export default async function Region({
   }
 
   // Afficher la page uniquement en mode développement ou si le document est publié
+
   return (
     <div>
       <div>{myRegion.data.region_name}</div>
