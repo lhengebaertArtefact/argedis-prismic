@@ -13,7 +13,10 @@ export default async function Region({
   const isPublished = !myRegion.tags.includes("unpublished");
 
   // Afficher la page uniquement en mode développement ou si le document est publié
-  if (process.env.NODE_ENV !== "production" || isPublished) {
+  if (
+    process.env.NODE_ENV !== "production" ||
+    (process.env.NODE_ENV === "production" && isPublished)
+  ) {
     return (
       <div>
         <div>{myRegion.data.region_name}</div>

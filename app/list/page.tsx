@@ -12,7 +12,10 @@ export default async function Home() {
         const isPublished = !element.tags.includes("unpublished");
 
         // Afficher le lien vers la page uniquement en mode développement ou si le document est publié
-        if (process.env.NODE_ENV !== "production" || isPublished) {
+        if (
+          process.env.NODE_ENV !== "production" ||
+          (process.env.NODE_ENV === "production" && isPublished)
+        ) {
           return (
             <Link key={element.id} href={`/${element.uid}/fr`}>
               {element.uid}

@@ -50,7 +50,10 @@ export default async function ProducersPage({
   const isPublished = !myProducer.tags.includes("unpublished");
 
   // Afficher la page uniquement en mode développement ou si le document est publié
-  if (process.env.NODE_ENV !== "production" || isPublished) {
+  if (
+    process.env.NODE_ENV !== "production" ||
+    (process.env.NODE_ENV === "production" && isPublished)
+  ) {
     return (
       <main className="">
         <PrismicNextImage field={myProducer.data.producer_photo} />

@@ -41,7 +41,10 @@ export default async function Producersmap({
   const isPublished = !myRegion.tags.includes("unpublished");
 
   // Afficher la page uniquement en mode développement ou si le document est publié
-  if (process.env.NODE_ENV !== "production" || isPublished) {
+  if (
+    process.env.NODE_ENV !== "production" ||
+    (process.env.NODE_ENV === "production" && isPublished)
+  ) {
     // Fonction pour générer une position aléatoire dans une plage spécifique
     const getPosition = (min: any, max: any) => {
       return Math.floor(Math.random() * (max - min + 1) + min) + "px";
